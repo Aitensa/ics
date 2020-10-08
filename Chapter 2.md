@@ -173,3 +173,9 @@ void *my_calloc(size_t nmemb,size_t size){
 }
 
 '''
+	
+/////////////2.83/////////////
+'''
+A: $\frac{Y}{2^{k}-1}$
+B: omitted
+'''
