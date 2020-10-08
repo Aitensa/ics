@@ -1,4 +1,4 @@
-# 2.63
+///////////// 2.63////////////////////
 '''
 #include<cstdio>
 #include<climits>
@@ -17,10 +17,54 @@ int sra(int x,int k){
 	msk += (!pos)<<(w-k);
 	return msk|xsrl;
 }
-int main(){
-	int x = 346;
-	printf("%x\n",sra(x,3));
-	return 0;
+'''
+
+//////////////////2.64////////////////
+'''
+int any_odd_one(unsigned x){
+	return !!(x&(0x55555555));
 }
 '''
 
+//////////////////2.65////////////////
+'''
+int odd_ones(unsigned x){
+    int y = x>>16;x^=y;
+    y= x>>8;x^=y;
+    y=x>>4;x^=y;
+    y=x>>2;x^=y;
+    y=x>>1;x^=y;
+    return (x&1);
+}
+'''
+
+////////////////2.66////////////////
+'''
+int leftmost_one(unsigned x){
+    unsigned y = x;// attention:must decalred in unsigned
+    y |= y>>1;
+    y |= y>>2;
+    y |= y>>4;
+    y |= y>>8;
+    y |= y>>16;//make the mask in the pattern of 0000011...111
+    y = ~(y>>1);
+    return x & y;
+}
+'''
+
+///////////////2.67//////////////////
+'''
+A: when the shift count is too big, some compilers will chose to exert the module operation while some won't.
+B: 
+int int_size_is_32(){
+    int set_msb = 1<<31;
+    int beyond_msb = set_msb<<1;
+    return set_msb&&!(beyond_msb);
+}
+C:
+int int_size_is_32_on_16bits(){
+    unsigned set_msb = 1<<1<<15<<15;
+    unsigned beyond_msb = set_msb<<1;
+    return set_msb&&!(beyond_msb);
+}
+'''
