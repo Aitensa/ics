@@ -68,3 +68,67 @@ int int_size_is_32_on_16bits(){
     return set_msb&&!(beyond_msb);
 }
 '''
+
+/////////////2.68/////////////////
+'''
+int lower_one_mask(int n){
+    int x = 1<<(n-1);
+    x |= x>>1;
+    x |= x>>2;
+    x |= x>>4; 
+    x |= x>>8;
+    x |= x>>16;
+    return x;
+}
+
+'''
+
+/////////////2.69////////////////
+'''
+unsigned rotate_left(unsigned x,int n){
+    int msk = 1<<(32-n);
+    msk |= msk<<1;
+    msk |= msk<<2;
+    msk |= msk<<4;
+    msk |= msk<<8;
+    msk |= msk<<16;
+    msk &= x;
+    x=x<<n;
+    msk = msk>>(32-n);
+    x|=msk;
+    return x;
+}
+'''
+
+//////////////2.70/////////////////
+'''
+
+int fits_bits(int x,int n){
+    int msk = 1<<(31-n);
+    msk|=msk>>1;
+    msk|=msk>>2;
+    msk|=msk>>4;
+    msk|=msk>>8;
+    msk|=msk>>16;
+    msk &=x;
+    return !(x^msk);
+}
+'''
+
+/////////////2.71//////////////////
+'''
+A:first it should be (bytenum-1)<<3, also the fruit isn't reflect the sign.
+B:
+int xbyte(packed_t word, int bytenum){
+    int size = sizeof(unsigned);
+    int shift_left_cnt = (size-1-bytenum)<<3;
+    int shift_right_cnt=(size-1)<<3;
+    return word<<shift_left_cnt>>shift_right_cnt;
+}
+//the sigend return can be regarded as acquiring the sign of return.
+'''
+
+////////////2.72////////////////
+'''
+if(maxbytes>=(int)sizeof(val))
+'''
