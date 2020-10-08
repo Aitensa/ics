@@ -132,3 +132,44 @@ int xbyte(packed_t word, int bytenum){
 '''
 if(maxbytes>=(int)sizeof(val))
 '''
+
+//////////2.73///////////////
+'''
+int saturating_add(int x,int y){
+    int c = x+y ;
+    int msk = INT_MIN;
+    int pos_ = !(x&msk)&&!(y&msk)&&(c&msk);
+    int neg_ = (x&msk)&&(y&msk)&&!(c&msk);
+    (pos_&&(c=INT_MAX))||(neg_&&(c=INT_MIN));// use the boolean val of expression is forever true
+    return c;
+}
+'''
+
+////////////2.74/////////////
+'''
+int tsub_ok(int x,int y){
+    int c = x - y;
+    int msk = INT_MIN;
+    int pos_ = !(x&msk)&&!((-y)&msk)&&(c&msk);
+    int neg_ = (x&msk)&&((-y)&msk)&&!(c&msk);
+    return !(pos_||neg_);
+}// return 0 when overflowed
+'''
+
+/////////////2.76///////////
+'''
+
+void *my_calloc(size_t nmemb,size_t size){
+    if(!nmemb||!size)return NULL;
+    
+    size_t buf_size = nmemb*size;
+    if(nmemb == buf_size/size)//cope with the overflow of multiply
+    {
+        void *ptr = malloc(buf_size);
+        memset(ptr,0,buf_size);
+        return ptr;
+    }
+    return NULL;
+}
+
+'''
